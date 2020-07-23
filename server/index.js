@@ -43,7 +43,13 @@ app.get('/api/products/:productId', (req, res, next) => {
   `;
 
   db.query(sql)
-    .then(result => res.json(result.rows[0]))
+    .then(result => {
+      if (result.rows[0] === undefined) {
+        next(new ClientError('Requested productId may not exist in the database. Check your data agin.', 404));
+      } else {
+        res.json(result.rows[0]);
+      }
+    })
     .catch(err => next(err));
 });
 
