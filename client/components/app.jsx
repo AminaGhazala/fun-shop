@@ -20,15 +20,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    const statusMessage = this.state.isLoading
-      ? <p>Testing connections...</p>
-      : <p>{this.state.message}</p>;
-
     return (
       <div>
-        <Header title={'Wicked Sales'}/>
+        <Header title={'$ Wicked Sales'}/>
         <ProductList />
-        { statusMessage }
       </div>
     );
   }
