@@ -34,6 +34,30 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products/:productId', (req, res, next) => {
+  const id = parseInt(req.params.productId);
+  if (isNaN(id) || id < 0) {
+    return res.status(400).json({ error: 'Your requested productId is invalid.' });
+  }
+
+  const paramDb = [id];
+  const sql = `
+    select *
+    from "products"
+    where "productId" = $1
+  `;
+
+  db.query(sql, paramDb)
+    .then(result => {
+      if (result.rows[0] === undefined) {
+        next(new ClientError('Requested productId may not exist in the database. Check your data agin.', 404));
+      } else {
+        res.json(result.rows[0]);
+      }
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
