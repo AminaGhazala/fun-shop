@@ -36,6 +36,10 @@ app.get('/api/products', (req, res, next) => {
 
 app.get('/api/products/:productId', (req, res, next) => {
   const id = parseInt(req.params.productId);
+  if (isNaN(id) || id < 0) {
+    return res.status(400).json({ error: 'Your requested productId is invalid.' });
+  }
+
   const sql = `
     select *
     from "products"
