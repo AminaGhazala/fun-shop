@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './header';
+import ProductListItem from './product-list-item';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
     return (
       <div>
         <Header title={'Wicked Sales'}/>
+        <ProductListItem />
         { statusMessage }
       </div>
     );
