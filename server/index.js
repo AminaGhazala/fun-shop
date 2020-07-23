@@ -40,13 +40,14 @@ app.get('/api/products/:productId', (req, res, next) => {
     return res.status(400).json({ error: 'Your requested productId is invalid.' });
   }
 
+  const paramDb = [id];
   const sql = `
     select *
     from "products"
-    where "productId" = ${id}
+    where "productId" = $1
   `;
 
-  db.query(sql)
+  db.query(sql, paramDb)
     .then(result => {
       if (result.rows[0] === undefined) {
         next(new ClientError('Requested productId may not exist in the database. Check your data agin.', 404));
