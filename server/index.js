@@ -59,7 +59,24 @@ app.get('/api/products/:productId', (req, res, next) => {
 });
 
 app.get('/api/cart', (req, res, next) => {
-  res.json({});
+  if (!req.session.cartId) {
+    res.json({});
+  } else {
+    const paramDb = [req.session.cartId];
+    const sql = `
+      select "c"."cartItemId",
+             "c"."price",
+             "p"."productId",
+             "p"."image",
+             "p"."name",
+             "p"."shortDescription"
+        from "cartItems" as "c"
+        join "products" as "p" using ("productId")
+       where "c"."cartId" = $1
+    `;
+
+    db.query(sql, paramDb).then(result => res.json(result.rows[0]));
+  }
 });
 
 app.post('/api/cart', (req, res, next) => {
@@ -94,7 +111,7 @@ app.post('/api/cart', (req, res, next) => {
       }
     })
     .then(result => {
-      req.session.cartId = result.cartId;
+      req.session ? result.cartId = req.session.cartId : req.session.cartId = result.cartId;
 
       const paramDb = [result.cartId, productId, result.price];
       const sql = `
