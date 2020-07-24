@@ -5,7 +5,8 @@ export default function ProductListItem(props) {
   const price = '$' + props.item.price.toString().substr(0, priceLength - 2) + '.' + props.item.price.toString().substr(priceLength - 2);
 
   return (
-    <div className="product-list-item card col-lg-3 col-sm-5 m-3 p-0" style={{ width: '18rem' }}>
+    <div className="product-list-item card col-lg-3 col-sm-5 m-3 p-0"
+      style={{ width: '18rem', cursor: 'pointer' }}>
       <img src={props.item.image} className="card-img-top" alt={props.item.name}
         style={{ width: '100%', height: '250px', objectFit: 'contain' }}/>
       <div className="card-body">
