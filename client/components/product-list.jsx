@@ -20,11 +20,11 @@ export default class ProductList extends React.Component {
 
   render() {
     const productList = this.state.products.map(element =>
-      <ProductListItem key={element.productId} item={element} />
+      <ProductListItem key={element.productId} item={element} selectedView={this.props.selectedView}/>
     );
 
     return (
-      <div className="product-list-container my-3" style={{ maxWidth: '97vw' }}>
+      <div className="product-list-container m-5" style={{ maxWidth: '97vw' }}>
         <div className="row justify-content-center">
           {productList}
         </div>
