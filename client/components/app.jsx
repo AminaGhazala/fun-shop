@@ -43,7 +43,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <Header title={'$ Wicked Sales'}/>
+        <Header title={'Wicked Sales'} cartItem={this.state.cart.cartItemCount}/>
         {productView}
       </div>
     );
