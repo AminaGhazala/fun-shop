@@ -60,7 +60,7 @@ app.get('/api/products/:productId', (req, res, next) => {
 
 app.get('/api/cart', (req, res, next) => {
   if (!req.session.cartId) {
-    res.json({});
+    res.json([]);
   } else {
     const paramDb = [req.session.cartId];
     const sql = `
@@ -75,7 +75,9 @@ app.get('/api/cart', (req, res, next) => {
        where "c"."cartId" = $1
     `;
 
-    db.query(sql, paramDb).then(result => res.json(result.rows[0]));
+    db.query(sql, paramDb)
+      .then(result => res.json(result.rows[0]))
+      .catch(err => next(err));
   }
 });
 
@@ -95,7 +97,7 @@ app.post('/api/cart', (req, res, next) => {
   db.query(sql, paramDb)
     .then(result => {
       if (result.rows[0] === undefined) {
-        next(new ClientError('Requested productId may not exist in the database. Check your data agin.', 400));
+        throw (new ClientError('Requested productId may not exist in the database. Check your data agin.', 400));
       } else {
         const price = result.rows[0].price;
         const sql = `
@@ -111,7 +113,7 @@ app.post('/api/cart', (req, res, next) => {
       }
     })
     .then(result => {
-      req.session ? result.cartId = req.session.cartId : req.session.cartId = result.cartId;
+      isNaN(req.session.cardId) ? (req.session.cartId = result.cartId) : (result.cartId = req.session.cartId);
 
       const paramDb = [result.cartId, productId, result.price];
       const sql = `
