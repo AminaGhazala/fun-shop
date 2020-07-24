@@ -14,10 +14,11 @@ export default class App extends React.Component {
         params: {}
       }
     };
+    this.setView = this.setView.bind(this);
   }
 
   setView(name, params) {
-    const newView = { name, params };
+    const newView = { name, params: { productId: params } };
     this.setState({ view: newView });
   }
 
