@@ -4,6 +4,7 @@ export default class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = { product: null };
+    this.handleBack = this.handleBack.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +22,10 @@ export default class ProductDetails extends React.Component {
       .catch(() => console.error('server response error'));
   }
 
+  handleBack() {
+    this.props.selectedView('catalog', {});
+  }
+
   render() {
     if (this.state.product === null) {
       return null;
@@ -30,7 +35,7 @@ export default class ProductDetails extends React.Component {
 
       const productDetailMenu = (
         <div className="row justify-content-center">
-          <div className="col" style={{ cursor: 'pointer' }} >
+          <div className="col" style={{ cursor: 'pointer' }} onClick={this.handleBack} >
             <p className="text-muted p-4 m-0">&lt; Back to catalog</p>
           </div>
         </div>
@@ -43,9 +48,9 @@ export default class ProductDetails extends React.Component {
               style={{ width: '100%', height: '300px', objectFit: 'contain' }} />
           </div>
           <div className="col-sm-6 col-md-7">
-            <h5 className="card-title mb-3"><b>{this.state.product.name}</b></h5>
-            <p className="card-text text-muted mb-3">{price}</p>
-            <p className="card-text">{this.state.product.shortDescription}</p>
+            <h5 className="card-title mb-3 px-4"><b>{this.state.product.name}</b></h5>
+            <p className="card-text text-muted mb-3 px-4">{price}</p>
+            <p className="card-text px-4">{this.state.product.shortDescription}</p>
           </div>
         </div>
       );
@@ -53,7 +58,7 @@ export default class ProductDetails extends React.Component {
       const productDetailDesciption = (
         <div className="row justify-content-center">
           <div className="col">
-            <p className="px-4 py-2">{this.state.product.longDescription}</p>
+            <p className="px-4 py-3">{this.state.product.longDescription}</p>
           </div>
         </div>
       );

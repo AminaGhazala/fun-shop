@@ -18,7 +18,7 @@ export default class App extends React.Component {
   }
 
   setView(name, params) {
-    const newView = { name, params: { productId: params } };
+    const newView = { name, params };
     this.setState({ view: newView });
   }
 

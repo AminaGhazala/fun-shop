@@ -7,7 +7,8 @@ export default class ProductListItem extends React.Component {
   }
 
   handleClick(event) {
-    this.props.selectedView('details', parseInt(event.currentTarget.id));
+    const param = { productId: parseInt(event.currentTarget.id) };
+    this.props.selectedView('details', param);
   }
 
   render() {
@@ -15,7 +16,7 @@ export default class ProductListItem extends React.Component {
     const price = '$' + this.props.item.price.toString().substr(0, priceLength - 2) + '.' + this.props.item.price.toString().substr(priceLength - 2);
 
     return (
-      <div className="product-list-item card col-lg-3 col-sm-5 m-3 p-0"
+      <div className="product-list-item card col-lg-3 col-sm-5 mx-3 mb-4 p-0"
         style={{ width: '18rem', cursor: 'pointer' }} id={this.props.item.productId} onClick={this.handleClick}>
         <img src={this.props.item.image} className="card-img-top" alt={this.props.item.name}
           style={{ width: '100%', height: '250px', objectFit: 'contain' }}/>
