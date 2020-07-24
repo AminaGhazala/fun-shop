@@ -7,10 +7,8 @@ const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
 
 const app = express();
-
 app.use(staticMiddleware);
 app.use(sessionMiddleware);
-
 app.use(express.json());
 
 app.get('/api/health-check', (req, res, next) => {
@@ -76,7 +74,7 @@ app.get('/api/cart', (req, res, next) => {
     `;
 
     db.query(sql, paramDb)
-      .then(result => res.json(result.rows[0]))
+      .then(result => res.json(result.rows))
       .catch(err => next(err));
   }
 });
@@ -113,7 +111,7 @@ app.post('/api/cart', (req, res, next) => {
       }
     })
     .then(result => {
-      isNaN(req.session.cardId) ? (req.session.cartId = result.cartId) : (result.cartId = req.session.cartId);
+      isNaN(req.session.cartId) ? (req.session.cartId = result.cartId) : (result.cartId = req.session.cartId);
 
       const paramDb = [result.cartId, productId, result.price];
       const sql = `
