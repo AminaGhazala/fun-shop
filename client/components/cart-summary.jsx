@@ -16,7 +16,7 @@ export default class CartSummary extends React.Component {
     if (totalPrice === 0) return null;
 
     const priceLength = totalPrice.toString().length;
-    return 'Item Total $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
+    return 'Item Total: $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
   }
 
   render() {
