@@ -149,6 +149,30 @@ app.post('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/orders', (req, res, next) => {
+  if (isNaN(req.session.cartId)) {
+    return res.status(400).json({ error: 'Sorry, we are unable to process your order.' });
+  }
+
+  if (!req.body.name || !req.body.creditCard || !req.body.shippingAddress) {
+    return res.status(400).json({ error: 'Sorry, your order information is incomplete.' });
+  }
+
+  const paramDb = [req.session.cartId, req.body.name, req.body.creditCard, req.body.shippingAddress];
+  const sql = `
+        insert into "orders" ("cartId", "name", "creditCard", "shippingAddress")
+             values ($1, $2, $3, $4)
+          returning *
+      `;
+
+  db.query(sql, paramDb)
+    .then(result => {
+      req.session = null;
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
