@@ -5,6 +5,7 @@ export default class ProductDetails extends React.Component {
     super(props);
     this.state = { product: null };
     this.handleBack = this.handleBack.bind(this);
+    this.handleClickCart = this.handleClickCart.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +25,10 @@ export default class ProductDetails extends React.Component {
 
   handleBack() {
     this.props.selectedView('catalog', {});
+  }
+
+  handleClickCart() {
+    this.props.addToCart(this.state.product);
   }
 
   render() {
@@ -47,10 +52,11 @@ export default class ProductDetails extends React.Component {
             <img src={this.state.product.image} className="card-img-top px-4" alt={this.state.product.name}
               style={{ width: '100%', height: '300px', objectFit: 'contain' }} />
           </div>
-          <div className="col-sm-6 col-md-7">
-            <h5 className="card-title mb-3 px-4"><b>{this.state.product.name}</b></h5>
-            <p className="card-text text-muted mb-3 px-4">{price}</p>
-            <p className="card-text px-4">{this.state.product.shortDescription}</p>
+          <div className="col-sm-6 col-md-7 px-4">
+            <h5 className="card-title mb-3"><b>{this.state.product.name}</b></h5>
+            <p className="card-text text-muted mb-3">{price}</p>
+            <p className="card-text">{this.state.product.shortDescription}</p>
+            <button type="button" className="btn btn-primary" onClick={this.handleClickCart}>Add to Cart</button>
           </div>
         </div>
       );
