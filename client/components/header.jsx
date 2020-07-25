@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default function Header(props) {
-  const cartItemCount = isNaN(props.cartItem) ? 0 : parseInt(props.cartItem);
-  const cartItemTitle = cartItemCount === 1 ? '1 Item' : `${cartItemCount} Items`;
+  const cartItemTitle = props.cartItem === 1 ? '1 Item' : `${props.cartItem} Items`;
   return (
     <div className="shadow-lg bg-dark text-white d-flex justify-content-between align-items-center p-3 px-5">
       <h2 className="d-inline-block"><i className="fas fa-dollar-sign pr-2"></i>{props.title}</h2>

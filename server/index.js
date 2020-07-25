@@ -98,25 +98,30 @@ app.post('/api/cart', (req, res, next) => {
         throw (new ClientError('Requested productId may not exist in the database. Check your data agin.', 400));
       } else {
         const price = result.rows[0].price;
-        const sql = `
-          insert into "carts" ("cartId", "createdAt")
-               values (default, default)
-            returning "cartId"
-        `;
-        return db.query(sql)
-          .then(result2 => {
-            const cartId = result2.rows[0].cartId;
-            return { cartId, price };
-          });
+
+        if (isNaN(req.session.cartId)) {
+          const sql = `
+            insert into "carts" ("cartId", "createdAt")
+                 values (default, default)
+              returning "cartId"
+          `;
+          return db.query(sql)
+            .then(result2 => {
+              const cartId = result2.rows[0].cartId;
+              return { cartId, price };
+            });
+        } else {
+          const cartId = req.session.cartId;
+          return { cartId, price };
+        }
       }
     })
     .then(result => {
-      isNaN(req.session.cartId) ? (req.session.cartId = result.cartId) : (result.cartId = req.session.cartId);
-
+      req.session.cartId = result.cartId;
       const paramDb = [result.cartId, productId, result.price];
       const sql = `
         insert into "cartItems" ("cartId", "productId", "price")
-              values ($1, $2, $3)
+             values ($1, $2, $3)
           returning "cartItemId"
       `;
 
