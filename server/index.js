@@ -81,7 +81,7 @@ app.get('/api/cart', (req, res, next) => {
 
 app.post('/api/cart', (req, res, next) => {
   const productId = parseInt(req.body.productId);
-  if (isNaN(req.body.productId) || productId < 0) {
+  if (isNaN(productId) || productId < 0) {
     return res.status(400).json({ error: 'Your requested productId is invalid.' });
   }
 
@@ -99,7 +99,7 @@ app.post('/api/cart', (req, res, next) => {
       } else {
         const price = result.rows[0].price;
 
-        if (isNaN(req.session.cartId)) {
+        if (!req.session.cartId) {
           const sql = `
             insert into "carts" ("cartId", "createdAt")
                  values (default, default)
@@ -150,7 +150,7 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
-  if (isNaN(req.session.cartId)) {
+  if (!req.session.cartId) {
     return res.status(400).json({ error: 'Sorry, we are unable to process your order.' });
   }
 
@@ -167,7 +167,7 @@ app.post('/api/orders', (req, res, next) => {
 
   db.query(sql, paramDb)
     .then(result => {
-      req.session = null;
+      req.session.cartId = null;
       res.status(201).json(result.rows[0]);
     })
     .catch(err => next(err));
