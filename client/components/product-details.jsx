@@ -13,7 +13,7 @@ export default class ProductDetails extends React.Component {
   }
 
   getProduct(productId) {
-    if (isNaN(productId) || productId < 0) {
+    if (!productId || productId < 0) {
       return console.error(`Invalid productId: ${productId}`);
     }
 

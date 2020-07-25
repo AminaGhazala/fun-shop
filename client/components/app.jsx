@@ -11,7 +11,7 @@ export default class App extends React.Component {
       message: null,
       isLoading: true,
       view: { name: 'catalog', params: {} },
-      cart: {}
+      cart: []
     };
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
@@ -25,6 +25,8 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
+    if (!product) console.error(`Invalid product: ${product}`);
+
     fetch('/api/cart', {
       method: 'POST',
       headers: {
@@ -33,6 +35,23 @@ export default class App extends React.Component {
       body: JSON.stringify({ productId: `${product.productId}` })
     }).then(res => res.json())
       .then(data => this.getCartItems())
+      .catch(err => this.setState({ message: err.message }));
+  }
+
+  placeOrder(orderInfo) {
+    if (!orderInfo) console.error(`Invalid orderInfo: ${orderInfo}`);
+
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name: `${orderInfo.name}`, creditCard: `${orderInfo.creditCard}`, shippingAddress: `${orderInfo.shippingAddress}` })
+    }).then(res => res.json())
+      .then(data => {
+        this.setState({ cart: [] });
+        this.setView('catalog', {});
+      })
       .catch(err => this.setState({ message: err.message }));
   }
 
