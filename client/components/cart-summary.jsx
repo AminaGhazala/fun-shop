@@ -1,7 +1,16 @@
 import React from 'react';
-import CartSummaryItem from './cart-summary-item';
+// import CartSummaryItem from './cart-summary-item';
 
 export default class CartSummary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleBack = this.handleBack.bind(this);
+  }
+
+  handleBack(event) {
+    this.props.selectedView('catalog', {});
+  }
+
   render() {
     const tatalAmount = 'Item Total';
     const cartSummaryMenu = (
@@ -21,7 +30,7 @@ export default class CartSummary extends React.Component {
     );
 
     const cartSummaryItem = (
-      <CartSummaryItem />
+      null
     );
 
     const cartSummaryTotal = (
