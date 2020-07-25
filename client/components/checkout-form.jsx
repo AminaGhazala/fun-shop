@@ -9,9 +9,17 @@ export default class CheckoutForm extends React.Component {
     this.handleClickOrder = this.handleClickOrder.bind(this);
   }
 
-  handleBack() {
-    this.setState({ name: '', shippingAddress: '' });
+  getTotalPrice() {
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseInt(acc) + parseInt(cur.price), 0);
+    if (totalPrice === 0) return 'Order Total: 0';
 
+    const priceLength = totalPrice.toString().length;
+    return 'Order Total: $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
+  }
+
+  handleBack() {
+    this.setState({ name: '', creditCard: '', shippingAddress: '' });
+    this.props.selectedView('catalog', {});
   }
 
   handleChange(event) {
@@ -19,8 +27,12 @@ export default class CheckoutForm extends React.Component {
   }
 
   handleClickOrder(event) {
-
     event.preventDefault();
+    if (this.state.name.length === 0 || this.state.creditCard.length === 0 || this.state.shippingAddress.length === 0) {
+      return alert('Please, fill all information');
+    }
+
+    this.props.placeOrder(this.state);
   }
 
   render() {
@@ -35,39 +47,36 @@ export default class CheckoutForm extends React.Component {
     const checkoutTotal = (
       <div className="row justify-content-center">
         <div className="col">
-          <h4 className="m-0 text-muted">Order Total: $100.00</h4>
+          <h4 className="pb-4 m-0 text-muted">{this.getTotalPrice()}</h4>
         </div>
       </div>
     );
 
     const checkoutForm = (
-      <div className="row create-card-container">
-        <h1 className="text-center">Create New Card</h1>
-        <form>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input className="form-control" type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="creditCard">Credit Card</label>
-            <input className="form-control" type="text" name="creditCard" id="creditCard" value={this.state.creditCard} onChange={this.handleChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="shippingAddress">Shipping Address</label>
-            <textarea className="form-control" name="shippingAddress" id="shippingAddress" cols="30" rows="5" value={this.state.shippingAddress} onChange={this.handleChange}></textarea>
-          </div>
-        </form>
+      <div className="row justify-content-center">
+        <div className="col">
+          <form className="pb-4">
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input className="form-control" type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange} required/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="creditCard">Credit Card</label>
+              <input className="form-control" type="text" name="creditCard" id="creditCard" value={this.state.creditCard} onChange={this.handleChange} required/>
+            </div>
+            <div className="form-group">
+              <label htmlFor="shippingAddress">Shipping Address</label>
+              <textarea className="form-control" name="shippingAddress" id="shippingAddress" cols="30" rows="5" value={this.state.shippingAddress} onChange={this.handleChange} required></textarea>
+            </div>
+          </form>
+        </div>
       </div>
     );
 
     const checkoutFooter = (
-      <div className="row justify-content-between">
-        <div className="col">
-          <p className="text-muted" style={{ cursor: 'pointer' }} onClick={this.handleBack}>&lt; Continue Shopping</p>
-        </div>
-        <div className="col">
-          <button type="button" className="btn btn-primary" onClick={this.handleClickOrder}>Place Order</button>
-        </div>
+      <div className="d-flex justify-content-between">
+        <p className="text-muted" style={{ cursor: 'pointer' }} onClick={this.handleBack}>&lt; Continue Shopping</p>
+        <button type="button" className="btn btn-primary" onClick={this.handleClickOrder}>Place Order</button>
       </div>
     );
 

@@ -3,6 +3,7 @@ import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
+import CheckoutForm from './checkout-form';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class App extends React.Component {
       cart: []
     };
     this.setView = this.setView.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
     this.addToCart = this.addToCart.bind(this);
   }
 
@@ -48,10 +50,7 @@ export default class App extends React.Component {
       },
       body: JSON.stringify({ name: `${orderInfo.name}`, creditCard: `${orderInfo.creditCard}`, shippingAddress: `${orderInfo.shippingAddress}` })
     }).then(res => res.json())
-      .then(data => {
-        this.setState({ cart: [] });
-        this.setView('catalog', {});
-      })
+      .then(data => this.setState({ cart: [], view: { name: 'catalog', params: {} } }))
       .catch(err => this.setState({ message: err.message }));
   }
 
@@ -71,6 +70,8 @@ export default class App extends React.Component {
       return <ProductDetails selectedView={this.setView} viewParam={this.state.view.params} addToCart={this.addToCart} />;
     } else if (viewName === 'cart') {
       return <CartSummary selectedView={this.setView} cart={this.state.cart} />;
+    } else if (viewName === 'checkout') {
+      return <CheckoutForm selectedView={this.setView} cart={this.state.cart} placeOrder={this.placeOrder} />;
     } else {
       return null;
     }
