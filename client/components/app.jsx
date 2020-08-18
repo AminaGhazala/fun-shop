@@ -80,7 +80,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Header title={'Wicked Sales'} cartItem={this.state.cart.length} selectedView={this.setView}/>
+        <Header title={'Fun Shop'} cartItem={this.state.cart.length} selectedView={this.setView}/>
         {this.getMainView(this.state.view.name)}
       </div>
     );
