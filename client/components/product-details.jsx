@@ -70,10 +70,12 @@ export default class ProductDetails extends React.Component {
       );
 
       return (
-        <div className="product-detail-container card m-5" style={{ maxWidth: '97vw' }}>
-          {productDetailMenu}
-          {productDetailBody}
-          {productDetailDesciption}
+        <div className='container d-flex justify-content-center align-items-center'>
+          <div className='product-detail-container card mt-3'>
+            {productDetailMenu}
+            {productDetailBody}
+            {productDetailDesciption}
+          </div>
         </div>
       );
     }

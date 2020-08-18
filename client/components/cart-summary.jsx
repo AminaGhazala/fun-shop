@@ -26,24 +26,24 @@ export default class CartSummary extends React.Component {
 
   render() {
     const cartSummaryMenu = (
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col" style={{ cursor: 'pointer' }} onClick={this.handleBack} >
-          <p className="text-muted py-4 m-0">&lt; Back to catalog</p>
+          <p className="text-muted">&lt; Back to catalog</p>
         </div>
       </div>
     );
 
     const cartSummaryTitle = (
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
-          <h1 className="pb-4 m-0">My Cart</h1>
+          <h1 className="py-2">My Cart</h1>
         </div>
       </div>
     );
 
     const cartSummaryItem = (
       this.props.cart.length === 0
-        ? <h3 className="pb-4 m-0">Shopping cart is empty.</h3>
+        ? <h3 className="pb-2">Shopping cart is empty.</h3>
         : this.props.cart.map((item, index) => (
           <CartSummaryItem product={item} key={index}/>
         ))
@@ -59,11 +59,13 @@ export default class CartSummary extends React.Component {
     );
 
     return (
-      <div className="cart-summary-container m-5 px-4" style={{ maxWidth: '97vw' }}>
-        {cartSummaryMenu}
-        {cartSummaryTitle}
-        {cartSummaryItem}
-        {cartSummaryFooter}
+      <div className='container d-flex justify-content-center align-items-center'>
+        <div className='cart-summary-container mt-3'>
+          {cartSummaryMenu}
+          {cartSummaryTitle}
+          {cartSummaryItem}
+          {cartSummaryFooter}
+        </div>
       </div>
     );
   }

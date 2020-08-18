@@ -18,7 +18,7 @@ export default class Header extends React.Component {
   render() {
     const cartItemTitle = this.props.cartItem === 1 ? '1 Item' : `${this.props.cartItem} Items`;
     return (
-      <header className='shadow-lg bg-info text-white'>
+      <header className='shadow bg-info text-white'>
         <div className='container d-flex justify-content-between align-items-center'>
           <div className='d-inline-flex pt-2'>
             <h4 className='header-font pt-1' style={{ cursor: 'pointer' }} onClick={this.handleClickBack}>

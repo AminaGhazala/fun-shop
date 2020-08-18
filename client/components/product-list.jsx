@@ -24,7 +24,7 @@ export default class ProductList extends React.Component {
     );
 
     return (
-      <div className="product-list-container m-5" style={{ maxWidth: '97vw' }}>
+      <div className="product-list-container mt-3">
         <div className="row justify-content-center">
           {productList}
         </div>
