@@ -74,7 +74,7 @@ CREATE TABLE public."cartItems" (
     "cartItemId" integer NOT NULL,
     "cartId" integer NOT NULL,
     "productId" integer NOT NULL,
-    price integer NOT NULL
+    price numeric(100,2) NOT NULL
 );
 
 
@@ -169,10 +169,12 @@ ALTER SEQUENCE public."orders_orderId_seq" OWNED BY public.orders."orderId";
 CREATE TABLE public.products (
     "productId" integer NOT NULL,
     name text NOT NULL,
-    price integer NOT NULL,
+    price numeric(100,2) NOT NULL,
     image text NOT NULL,
     "shortDescription" text NOT NULL,
-    "longDescription" text NOT NULL
+    "longDescription" text NOT NULL,
+    "newArrival" boolean NOT NULL,
+    "mayLike" boolean NOT NULL
 );
 
 
@@ -229,65 +231,6 @@ ALTER TABLE ONLY public.products ALTER COLUMN "productId" SET DEFAULT nextval('p
 --
 
 COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
-1	7	1	2999
-2	8	1	2999
-3	10	1	2999
-4	11	1	2999
-5	12	2	2595
-6	13	1	2999
-7	49	1	2999
-8	52	1	2999
-9	53	1	2999
-10	54	1	2999
-11	55	1	2999
-12	56	1	2999
-13	57	1	2999
-14	58	1	2999
-15	59	1	2999
-16	60	1	2999
-17	60	1	2999
-18	60	2	2595
-19	60	3	2900
-20	60	1	2999
-21	65	5	9900
-22	66	1	2999
-23	67	2	2595
-24	68	2	2595
-25	69	2	2595
-26	70	2	2595
-27	71	3	2900
-28	72	3	2900
-29	73	2	2595
-30	74	1	2999
-31	75	3	2900
-32	76	5	9900
-33	77	3	2900
-34	78	1	2999
-35	79	4	999
-36	77	2	2595
-37	77	1	2999
-38	77	6	830
-39	77	1	2999
-40	77	2	2595
-41	77	2	2595
-42	77	5	9900
-43	77	1	2999
-44	77	5	9900
-45	77	2	2595
-46	65	5	9900
-47	65	2	2595
-48	65	1	2999
-49	77	2	2595
-50	77	1	2999
-51	95	4	999
-52	96	5	9900
-53	97	6	830
-55	98	1	2999
-57	99	1	2999
-58	99	2	2595
-59	99	3	2900
-60	99	2	2595
-61	99	6	830
 \.
 
 
@@ -296,105 +239,6 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
-1	2020-07-24 11:10:10.217681-07
-2	2020-07-24 11:10:39.92554-07
-3	2020-07-24 11:11:11.79317-07
-4	2020-07-24 11:11:14.908517-07
-5	2020-07-24 11:14:38.591107-07
-6	2020-07-24 11:14:59.447288-07
-7	2020-07-24 11:23:48.407366-07
-8	2020-07-24 11:25:01.272131-07
-9	2020-07-24 11:30:00.113651-07
-10	2020-07-24 11:30:32.627526-07
-11	2020-07-24 11:36:34.407015-07
-12	2020-07-24 11:36:48.587374-07
-13	2020-07-24 11:36:56.413354-07
-14	2020-07-24 11:56:59.248203-07
-15	2020-07-24 11:57:47.883755-07
-16	2020-07-24 11:58:04.785399-07
-17	2020-07-24 11:58:16.113263-07
-18	2020-07-24 11:58:28.034995-07
-19	2020-07-24 11:58:44.581554-07
-20	2020-07-24 11:58:51.90801-07
-21	2020-07-24 11:59:03.961662-07
-22	2020-07-24 11:59:39.12005-07
-23	2020-07-24 12:04:20.032074-07
-24	2020-07-24 12:05:38.449737-07
-25	2020-07-24 12:05:53.13217-07
-26	2020-07-24 12:06:12.573974-07
-27	2020-07-24 12:06:28.161635-07
-28	2020-07-24 12:06:49.963023-07
-29	2020-07-24 12:07:02.556389-07
-30	2020-07-24 12:08:03.375819-07
-31	2020-07-24 12:08:11.337599-07
-32	2020-07-24 12:10:01.377445-07
-33	2020-07-24 12:10:19.058479-07
-34	2020-07-24 12:10:31.317534-07
-35	2020-07-24 12:10:51.070665-07
-36	2020-07-24 12:11:00.908384-07
-37	2020-07-24 12:11:09.590447-07
-38	2020-07-24 12:11:18.161364-07
-39	2020-07-24 12:11:29.429115-07
-40	2020-07-24 12:11:58.375777-07
-41	2020-07-24 12:12:06.464222-07
-42	2020-07-24 12:13:01.490176-07
-43	2020-07-24 12:13:14.551442-07
-44	2020-07-24 12:18:24.290468-07
-45	2020-07-24 12:29:31.622215-07
-46	2020-07-24 12:30:22.25627-07
-47	2020-07-24 12:31:12.794339-07
-48	2020-07-24 12:31:56.078111-07
-49	2020-07-24 12:34:56.903593-07
-50	2020-07-24 12:36:42.528364-07
-51	2020-07-24 12:37:05.242092-07
-52	2020-07-24 12:37:48.271813-07
-53	2020-07-24 12:38:08.205215-07
-54	2020-07-24 12:39:47.710998-07
-55	2020-07-24 12:40:19.74064-07
-56	2020-07-24 12:41:40.848649-07
-57	2020-07-24 12:41:58.658725-07
-58	2020-07-24 12:42:20.250277-07
-59	2020-07-24 12:42:33.419563-07
-60	2020-07-24 12:42:50.521168-07
-61	2020-07-24 12:57:49.004986-07
-62	2020-07-24 12:57:55.27523-07
-63	2020-07-24 12:58:02.799563-07
-64	2020-07-24 13:06:06.221017-07
-65	2020-07-24 13:40:06.206769-07
-66	2020-07-24 15:14:45.544021-07
-67	2020-07-24 15:15:14.00433-07
-68	2020-07-24 15:18:11.756548-07
-69	2020-07-24 15:18:49.771402-07
-70	2020-07-24 15:26:17.454002-07
-71	2020-07-24 15:27:51.722509-07
-72	2020-07-24 15:27:54.814182-07
-73	2020-07-24 15:28:28.037524-07
-74	2020-07-24 15:29:02.461138-07
-75	2020-07-24 15:30:58.083679-07
-76	2020-07-24 15:31:23.479472-07
-77	2020-07-24 15:41:09.71909-07
-78	2020-07-24 15:44:10.116583-07
-79	2020-07-24 15:44:41.102762-07
-80	2020-07-24 15:47:41.693867-07
-81	2020-07-24 15:47:49.239725-07
-82	2020-07-24 15:48:29.746019-07
-83	2020-07-24 15:49:33.2272-07
-84	2020-07-24 15:49:44.939343-07
-85	2020-07-24 15:54:53.944008-07
-86	2020-07-24 15:55:32.515826-07
-87	2020-07-24 15:57:46.088656-07
-88	2020-07-24 15:57:57.982377-07
-89	2020-07-24 15:58:06.4673-07
-90	2020-07-24 16:02:46.165122-07
-91	2020-07-24 16:02:57.092027-07
-92	2020-07-24 16:03:11.516822-07
-93	2020-07-24 16:03:50.616526-07
-94	2020-07-24 16:03:53.68839-07
-95	2020-07-24 16:16:58.014068-07
-96	2020-07-24 16:17:02.484987-07
-97	2020-07-24 16:17:08.285593-07
-98	2020-07-24 16:33:17.672093-07
-99	2020-07-24 16:58:40.170706-07
 \.
 
 
@@ -410,13 +254,19 @@ COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", 
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.products ("productId", name, price, image, "shortDescription", "longDescription") FROM stdin;
-1	Shake Weight	2999	/images/shake-weight.jpg	Dynamic Inertia technology ignites muscles in arms, shoulders, and chest.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-2	ShamWow	2595	/images/shamwow.jpg	It's like a chamois, towel, and sponge, all in one! Soaks up to 10x it's weight in any liquid!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-3	Snuggie	2900	/images/snuggie.jpg	Super-Soft Fleece with pockets! One Size fits all Adults! Keeps you Warm & Your Hands-Free!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-4	Wax Vac	999	/images/wax-vac.jpg	Gentle way to remove ear wax. Safe and hygienic. Reduces the risk of painful infections.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-5	Ostrich Pillow	9900	/images/ostrich-pillow.jpg	Create your own snugly space in the world and feel-good anywhere with the ultimate cocoon pillow.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-6	Tater Mitts	830	/images/tater-mitts.jpg	8 Seconds is all you need with Tater Mitts. Quickly and easily prepare all your favorite potato dishes with Tater Mitts.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
+COPY public.products ("productId", name, price, image, "shortDescription", "longDescription", "newArrival", "mayLike") FROM stdin;
+1	Back to The Future Part II Time Machine	39.99	/images/back-to-the-future.jpg	Jada Toys Back to The Future Part II Time Machine with Lights 1:24 Scale	Entertainment Earth Exclusive! The toy you always wanted is finally here. Based on the 1989 Back to the Future II movie, this is the best toy DeLorean money can buy. Not only does it feature classic DMC engineering (like the gull-wing doors) and Doc Brown's own special modifications, but our version of the DeLorean automobile also has the 2015 hover conversion kit. That's right, our exclusive vehicle has wheels that pop out for "flight mode"! The wheels spin, the doors open, and its plastic construction feels just like the toy you always wished you had. Don't miss your chance at owning one of America's finest motorcars ... with a special futuristic, time-traveling twist! It's a limited edition. 13-inch long vehicle that's compatible with many 3 3/4-inch scale action figures* (not included). Sound effects include: First time travel, Car trouble, Revving up and winding down, Opening door, Rev up and peel out, Engine start-up, Return from time travel, Return from time travel to a screeching halt, Time circuit engaged, Hover landing!	t	f
+2	Minions Holiday Series Figure	10.99	/images/minions.jpg	Minions Holiday Series Blind Box Random Figure	Join your favorite sidekick characters from Despicable Me Minions on holiday! These guys are ready to hit the beach and go surfing! There are twelve different designs with the possibility of a secret (chase) in some of the sets by random (1:144 chance)!\n\nThe Minions Holiday Series Blind Box Random Figure contains 1 randomly selected, individually blind-packaged mini-figure.\nBreakdown not available at this time.	t	f
+3	Hammer Opener	8.99	/images/hammer-openner.jpg	Creative World of Warcraft Retro Hammer Opener Sounding Beer Bottle Opener	Color: Copper, Silver \nSize: 1.Normal size: 235 x 90cm, screwdriver can be heard, metallic feel \n2. Small size: no screwdriver, non-sounding, plastic material	t	f
+4	Wall-E UDF Figure	14.99	/images/wall-e.jpg	UDF (ultra detail figure) Pixar wall-e non-scale PVC pre-painted finished goods	Wall-E returns to the UDF line, updated and re-newed! Depicts he waving a friendly hello. He stands approximately 2.55 inch tall and made of PVC (plastic) material. Great gift for Wall-E fans!	t	f
+5	Frozen 2 Elsa Master Craft Figure	299.99	/images/elsa-figure.jpg	Disney Frozen Master Craft Frozen 2 Elsa Statue	From Beast Kingdom. The magical charm of ice and snow returns! Dressed in an elegant flowing dress and a snow white cape fit for a queen, the figure brings to life Elsa's brave nature! This high-end Master Craft series weds conventional and 3D modeling to finely mold and portray Elsa's unique charm! With their expressive charm and new clothing, this collection is sure to become a classic!	t	f
+6	Spider-Man Egg Attack Figure	69.99	/images/egg-attack.jpg	Far From Home Spider-Man (Upgraded Suit Ver.)	Your friendly neighborhood Spider-Man swings back into action, sporting the new red and black suit from Spider-Man Far From Home! The latest in the Egg Attack Action (EAA) range of Marvel 6-inch super hero action figures, Spidey comes with 2 interchangeable head sculpts; replacement mouth and eyes; and a suit made from real, stretchable cloth, perfect for any type of pose! Also included are accessories including a pizza slice and a mobile phone.	t	f
+7	Star Wars Metacolle Figure Collection	29.99	/images/star-wars-series.jpg	Metal Collection Star Wars special set 	'Metacore', made using alloys by Takaratomi, who makes Tomica, is an abbreviation of the metal figure collection. It provides mobility for arms, waist, and head, and is a lineup of figures that stand out with heavy weight and delicate presentation even when small.?Kyloren, BB-5, and First Order Stormtrooper, who appeared in the new Star Wars series, joined the Meta This series.?Meet three Metacore figures.?	f	t
+8	StarCraft 2 Jim Raynor Figure	35.99	/images/starcraft-ds043.jpg	Beast Kingdom StarCraft 2 Jim Raynor 10th Anniversary Figure	From Beast Kingdom. Celebrating its tenth anniversary, Beast Kingdom has teamed up with Blizzard to launch the D-Stage, Staging Your Dreams selection of classic Starcraft II characters: Jim Raynor and Sarah Louise Kerrigan! These figures of the pair of seasoned warriors (sold separately) are fit for any fans' desk!	f	t
+9	Batman Automobilia Collection	54.99	/images/batman-car.jpg	State of the art Batmobile inspired by the new Justice League movie	New from the Justice League movie comes this 20" by 12" scale, highly detailed Batmobile for the adult collector! The updated, iconic Batman vehicle features true-to-movie design, weaponry and armored wheels with metal axles. Open the driver's canopy and seat a 6" scale action figure inside. Peer out the tinted windows over the mini guns and speed off. When DC Super-Villains are in range, rotate the rocket launcher to optimal position and fire! The bumper plates turn upward to engage the battering ram. Push the Batmobile forward and its linked front tires pivot as they roll. Recreate favorite action scenes or add this premium item to your collection. Experience the thrills of the world's greatest Super Hero's most powerful vehicle! Action figure sold separately, subject to availability.	f	t
+10	Dark Knight Batman Action Figure	89.99	/images/dark-knight.jpg	The Dark Knight Batman Dynamic 8-Ction Heroes Action Figure	Beast Kingdom is proud to introduce fans to the latest 1/9 scale, realistic action figure, The DAH (Dynamic 8ction Heroes) Dark Knight Batman. Based on the most popular batsuit from Christopher Nolan's seminal trilogy, the figure uses high composite materials to recreate every fine detail down to the texture on the suit and weaponry. With 26 points of articulation, the Dark Knight DAH is one of the most posable figures yet, and includes three replacement mouths, a branded stand with a bracket, as well as five pairs of replacement hands for fans to recreate the most exciting scenes from the films! No Batman would dare leave his bat-cave without his set of high-tech weaponry, and this set doesn't disappoint. Included are: One sticky bomb launcher, a grappling gun, bat darts, and a mini smoke bomb, plus Batman's glider backpack attachment!	f	t
+11	Dark Knight Tumbler 1:24 Diecast	39.99	/images/dark-knight-tumbler.jpg	"The Dark Knight" Batmobile with Batman Diecast Figure Camouflage Version	Brand new 1/24 scale diecast car model of "The Dark Knight" Batmobile with Batman Diecast Figure Camouflage Version "DC Comics" Series die cast model car by Jada.	f	t
+12	Marble Series 3 Types	59.99	/images/marble-series.jpg	3 set of Iron Man, Spider Man and Thanos	Avengers 3: Infinity War - Iron Man Mark 50 & Iron Spider Marvel Legends 6?? Action Figure 2-Pack\n\nAvengers:Endgame - Thanos\n \nInspired by Avengers 3: Infinity War, Hasbro have brought us this awesome 2-Pack of action figures featuring the nanotech-powered Iron Man Mark 50 and Iron Spider teaming up to take on the Mad Titan Thanos!	f	t
 \.
 
 
@@ -424,14 +274,14 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 61, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 1, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 99, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 1, true);
 
 
 --
@@ -490,4 +340,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

@@ -28,16 +28,13 @@ export default class ProductDetails extends React.Component {
   }
 
   handleClickCart() {
-    this.props.addToCart(this.state.product);
+    this.props.addToCart(this.state.product.productId);
   }
 
   render() {
-    if (this.state.product === null) {
-      return null;
+    if (!this.state.product) {
+      return <></>;
     } else {
-      const priceLength = this.state.product.price.toString().length;
-      const price = '$' + this.state.product.price.toString().substr(0, priceLength - 2) + '.' + this.state.product.price.toString().substr(priceLength - 2);
-
       const productDetailMenu = (
         <div className="row justify-content-center">
           <div className="col" style={{ cursor: 'pointer' }} onClick={this.handleBack} >
@@ -54,7 +51,7 @@ export default class ProductDetails extends React.Component {
           </div>
           <div className="col-sm-6 col-md-7 px-4">
             <h5 className="card-title mb-3"><b>{this.state.product.name}</b></h5>
-            <p className="card-text text-muted mb-3">{price}</p>
+            <p className="card-text text-muted mb-3">${this.state.product.price}</p>
             <p className="card-text">{this.state.product.shortDescription}</p>
             <button type="button" className="btn btn-primary" onClick={this.handleClickCart}>Add to Cart</button>
           </div>
