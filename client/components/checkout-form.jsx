@@ -10,11 +10,12 @@ export default class CheckoutForm extends React.Component {
   }
 
   getTotalPrice() {
-    const totalPrice = this.props.cart.reduce((acc, cur) => parseInt(acc) + parseInt(cur.price), 0);
-    if (totalPrice === 0) return 'Order Total: 0';
-
-    const priceLength = totalPrice.toString().length;
-    return 'Order Total: $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.price), 0);
+    if (totalPrice === 0) {
+      return 'Order Total: 0';
+    } else {
+      return 'Order Total: $' + parseFloat(totalPrice).toFixed(2).toLocaleString();
+    }
   }
 
   handleBack() {
