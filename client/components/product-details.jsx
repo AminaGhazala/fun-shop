@@ -1,4 +1,5 @@
 import React from 'react';
+import Loading from './loading';
 
 export default class ProductDetails extends React.Component {
   constructor(props) {
@@ -28,52 +29,63 @@ export default class ProductDetails extends React.Component {
   }
 
   handleClickCart() {
-    this.props.addToCart(this.state.product);
+    this.props.addToCart(this.state.product.productId);
   }
 
   render() {
-    if (this.state.product === null) {
-      return null;
+    if (!this.state.product) {
+      return <Loading />;
     } else {
-      const priceLength = this.state.product.price.toString().length;
-      const price = '$' + this.state.product.price.toString().substr(0, priceLength - 2) + '.' + this.state.product.price.toString().substr(priceLength - 2);
+      const { image, name, price, shortDescription, longDescription } = this.state.product;
+      const newLongDescription = longDescription.split(/\r?\n/).map((sentence, index) => {
+        return (
+          <span key={index}>
+            {`${sentence}`}
+            <br />
+          </span>
+        );
+      });
 
       const productDetailMenu = (
-        <div className="row justify-content-center">
-          <div className="col" style={{ cursor: 'pointer' }} onClick={this.handleBack} >
-            <p className="text-muted p-4 m-0">&lt; Back to catalog</p>
-          </div>
+        <div className='row m-0'>
+          <h5 className='text-muted hvr-icon-back px-3 px-sm-0 py-1' style={{ cursor: 'pointer' }} onClick={this.handleBack}>
+            <i className='fas fa-angle-left hvr-icon'></i> Back to catalog
+          </h5>
         </div>
       );
 
       const productDetailBody = (
-        <div className="row justify-content-center">
-          <div className="col-sm-6 col-md-5">
-            <img src={this.state.product.image} className="card-img-top px-4" alt={this.state.product.name}
-              style={{ width: '100%', height: '300px', objectFit: 'contain' }} />
+        <div className='row align-items-center m-0'>
+          <div className='col-sm-12 col-md-5 pt-3'>
+            <img src={image} className='card-img-top' alt={name} style={{ height: '300px', objectFit: 'contain' }} />
           </div>
-          <div className="col-sm-6 col-md-7 px-4">
-            <h5 className="card-title mb-3"><b>{this.state.product.name}</b></h5>
-            <p className="card-text text-muted mb-3">{price}</p>
-            <p className="card-text">{this.state.product.shortDescription}</p>
-            <button type="button" className="btn btn-primary" onClick={this.handleClickCart}>Add to Cart</button>
+          <div className='col-sm-12 col-md-7 p-4 p-sm-4 p-md-4'>
+            <h5 className='card-title mb-3'>
+              <b>{name}</b>
+            </h5>
+            <p className='card-text text-muted mb-3'>${price}</p>
+            <p className='card-text'>{shortDescription}</p>
+            <button type='button' className='btn btn-outline-primary' onClick={this.handleClickCart}>
+              Add to Cart
+            </button>
           </div>
         </div>
       );
 
       const productDetailDesciption = (
-        <div className="row justify-content-center">
-          <div className="col">
-            <p className="px-4 py-3">{this.state.product.longDescription}</p>
-          </div>
+        <div className='col'>
+          <hr />
+          <p className='p-2 p-sm-3 p-md-4'>{newLongDescription}</p>
         </div>
       );
 
       return (
-        <div className="product-detail-container card m-5" style={{ maxWidth: '97vw' }}>
+        <div className='container product-detail-container my-2 my-sm-3 p-0'>
           {productDetailMenu}
-          {productDetailBody}
-          {productDetailDesciption}
+          <div className='row d-flex card m-0'>
+            {productDetailBody}
+            {productDetailDesciption}
+          </div>
         </div>
       );
     }

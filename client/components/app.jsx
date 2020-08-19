@@ -26,15 +26,16 @@ export default class App extends React.Component {
       .catch(err => this.setState({ message: err.message }));
   }
 
-  addToCart(product) {
-    if (!product) console.error(`Invalid product: ${product}`);
+  addToCart(productId) {
+    const id = parseInt(productId);
+    if (isNaN(id)) console.error(`Invalid product: ${id}`);
 
     fetch('/api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ productId: `${product.productId}` })
+      body: JSON.stringify({ productId: `${id}` })
     }).then(res => res.json())
       .then(data => this.getCartItems())
       .catch(err => this.setState({ message: err.message }));
@@ -65,7 +66,7 @@ export default class App extends React.Component {
 
   getMainView(viewName) {
     if (viewName === 'catalog') {
-      return <ProductList selectedView={this.setView} />;
+      return <ProductList selectedView={this.setView} addToCart={this.addToCart} />;
     } else if (viewName === 'details') {
       return <ProductDetails selectedView={this.setView} viewParam={this.state.view.params} addToCart={this.addToCart} />;
     } else if (viewName === 'cart') {
@@ -80,7 +81,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Header title={'Wicked Sales'} cartItem={this.state.cart.length} selectedView={this.setView}/>
+        <Header title={'Fun Shop'} cartItem={this.state.cart.length} selectedView={this.setView}/>
         {this.getMainView(this.state.view.name)}
       </div>
     );

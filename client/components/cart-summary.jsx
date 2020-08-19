@@ -17,53 +17,61 @@ export default class CartSummary extends React.Component {
   }
 
   getTotalPrice() {
-    const totalPrice = this.props.cart.reduce((acc, cur) => parseInt(acc) + parseInt(cur.price), 0);
-    if (totalPrice === 0) return 'Item Total: 0';
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.price), 0);
+    const cartItemTitle = this.props.cart.length === 1 ? '1 Item' : `${this.props.cart.length} Items`;
 
-    const priceLength = totalPrice.toString().length;
-    return 'Item Total: $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
+    if (totalPrice === 0) {
+      return 'Item Total: 0';
+    } else {
+      return `Subtotal (${cartItemTitle}): $` + parseFloat(totalPrice).toFixed(2).toLocaleString();
+    }
   }
 
   render() {
     const cartSummaryMenu = (
-      <div className="row justify-content-center">
-        <div className="col" style={{ cursor: 'pointer' }} onClick={this.handleBack} >
-          <p className="text-muted py-4 m-0">&lt; Back to catalog</p>
-        </div>
+      <div className='row m-0'>
+        <h5 className='text-muted hvr-icon-back px-3 px-sm-0 py-1' style={{ cursor: 'pointer' }} onClick={this.handleBack}>
+          <i className='fas fa-angle-left hvr-icon'></i> Back to catalog
+        </h5>
       </div>
     );
 
     const cartSummaryTitle = (
-      <div className="row justify-content-center">
-        <div className="col">
-          <h1 className="pb-4 m-0">My Cart</h1>
-        </div>
+      <div className='row m-0'>
+        <h5 className='px-3 px-sm-0'>My Shopping Cart</h5>
       </div>
     );
 
     const cartSummaryItem = (
       this.props.cart.length === 0
-        ? <h3 className="pb-4 m-0">Shopping cart is empty.</h3>
+        ? <h3 className="pb-2">Shopping cart is empty.</h3>
         : this.props.cart.map((item, index) => (
           <CartSummaryItem product={item} key={index}/>
         ))
     );
 
-    const cartSummaryFooter = (
-      this.props.cart.length === 0
-        ? null
-        : <div className="d-flex justify-content-between">
-          <h3 className="m-0">{this.getTotalPrice()}</h3>
-          <button type="button" className="btn btn-primary" onClick={this.handleClickCheckout}>Checkout</button>
+    const cartSummaryFooter =
+      this.props.cart.length === 0 ? null : (
+        <div className='d-flex justify-content-center justify-content-sm-between align-items-center flex-wrap my-2'>
+          <div className='row m-0 py-1'>
+            <h5 className='px-3 px-sm-0 text-nowrap'>{this.getTotalPrice()}</h5>
+          </div>
+          <div className='row m-0 py-1'>
+            <button type='button' className='btn btn-outline-primary' onClick={this.handleClickCheckout}>
+              Proceed to checkout
+            </button>
+          </div>
         </div>
-    );
+      );
 
     return (
-      <div className="cart-summary-container m-5 px-4" style={{ maxWidth: '97vw' }}>
+      <div className='container cart-summary-container my-2 my-sm-3 p-0'>
         {cartSummaryMenu}
         {cartSummaryTitle}
-        {cartSummaryItem}
-        {cartSummaryFooter}
+        <div className='m-0'>
+          {cartSummaryItem}
+          {cartSummaryFooter}
+        </div>
       </div>
     );
   }

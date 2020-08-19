@@ -3,7 +3,12 @@ import React from 'react';
 export default class ProductListItem extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClickCart = this.handleClickCart.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClickCart(event) {
+    this.props.addToCart(event.currentTarget.parentNode.id);
   }
 
   handleClick(event) {
@@ -12,19 +17,44 @@ export default class ProductListItem extends React.Component {
   }
 
   render() {
-    const priceLength = this.props.item.price.toString().length;
-    const price = '$' + this.props.item.price.toString().substr(0, priceLength - 2) + '.' + this.props.item.price.toString().substr(priceLength - 2);
+    const { image, name, productId, price, shortDescription } = this.props.item;
+    const newShortDescription = shortDescription.split(/\r?\n/).map((sentence, index) => {
+      return (
+        <span key={index}>
+          {`${sentence}`}
+          <br />
+        </span>
+      );
+    });
 
     return (
-      <div className="product-list-item card col-lg-3 col-sm-5 mx-3 mb-4 p-0"
-        style={{ width: '18rem', cursor: 'pointer' }} id={this.props.item.productId} onClick={this.handleClick}>
-        <img src={this.props.item.image} className="card-img-top" alt={this.props.item.name}
-          style={{ width: '100%', height: '250px', objectFit: 'contain' }}/>
-        <div className="card-body">
-          <h5 className="card-title"><b>{this.props.item.name}</b></h5>
-          <p className="card-text text-muted">{price}</p>
-          <p className="card-text">{this.props.item.shortDescription}</p>
+      <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow hvr-underline-from-center' style={{ cursor: 'pointer' }}>
+        <img
+          src={image}
+          className='card-img-top'
+          alt={name}
+          style={{ height: '250px', objectFit: 'contain' }}
+          id={productId}
+          onClick={this.handleClick}
+        />
+        <div className='card-body pb-0 px-3 text-center' id={productId} onClick={this.handleClick}>
+          <h6 className='card-title m-0 text-truncate text-wrap text-capitalize' style={{ minHeight: '40px' }}>
+            <b>{name}</b>
+          </h6>
+          <p className='card-text text-muted text-truncate text-wrap mb-1' style={{ height: '3rem' }}>
+            {newShortDescription}
+          </p>
+          <p className='card-text mb-1 text-center font-italic'>${price}</p>
         </div>
+        <div className='card-footer d-flex justify-content-around bg-transparent border-0 pb-3' id={productId}>
+          <button type='button' className='btn btn-sm btn-outline-info card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickOrder}>
+            Buy Now
+          </button>
+          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickCart}>
+            Add to Cart
+          </button>
+        </div>
+        <hr className='m-0' />
       </div>
     );
   }

@@ -10,11 +10,12 @@ export default class CheckoutForm extends React.Component {
   }
 
   getTotalPrice() {
-    const totalPrice = this.props.cart.reduce((acc, cur) => parseInt(acc) + parseInt(cur.price), 0);
-    if (totalPrice === 0) return 'Order Total: 0';
-
-    const priceLength = totalPrice.toString().length;
-    return 'Order Total: $' + totalPrice.toString().substr(0, priceLength - 2) + '.' + totalPrice.toString().substr(priceLength - 2);
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.price), 0);
+    if (totalPrice === 0) {
+      return 'Order Total: 0';
+    } else {
+      return 'Order Total: $' + parseFloat(totalPrice).toFixed(2).toLocaleString();
+    }
   }
 
   handleBack() {
@@ -37,23 +38,23 @@ export default class CheckoutForm extends React.Component {
 
   render() {
     const checkoutTitle = (
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
-          <h1 className="pb-4 m-0">My Cart</h1>
+          <h1 className="pb-4">My Cart</h1>
         </div>
       </div>
     );
 
     const checkoutTotal = (
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
-          <h4 className="pb-4 m-0 text-muted">{this.getTotalPrice()}</h4>
+          <h4 className="pb-4 text-muted">{this.getTotalPrice()}</h4>
         </div>
       </div>
     );
 
     const checkoutForm = (
-      <div className="row justify-content-center">
+      <div className="row">
         <div className="col">
           <form className="pb-4">
             <div className="form-group">
@@ -81,11 +82,13 @@ export default class CheckoutForm extends React.Component {
     );
 
     return (
-      <div className="checkout-form-container m-5 px-4" style={{ maxWidth: '97vw' }}>
-        {checkoutTitle}
-        {checkoutTotal}
-        {checkoutForm}
-        {checkoutFooter}
+      <div className='container d-flex justify-content-center align-items-center'>
+        <div className="checkout-form-container mt-3">
+          {checkoutTitle}
+          {checkoutTotal}
+          {checkoutForm}
+          {checkoutFooter}
+        </div>
       </div>
     );
   }

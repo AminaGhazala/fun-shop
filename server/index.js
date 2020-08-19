@@ -25,7 +25,8 @@ app.get('/api/products', (req, res, next) => {
            "image",
            "shortDescription"
       from "products"
-  `;
+     where "products"."newArrival" = true
+      `;
 
   db.query(sql)
     .then(result => res.json(result.rows))

@@ -1,20 +1,20 @@
 import React from 'react';
 
 export default function CartSummaryItem(props) {
-  const priceLength = props.product.price.toString().length;
-  const price = '$' + props.product.price.toString().substr(0, priceLength - 2) + '.' + props.product.price.toString().substr(priceLength - 2);
+  const { image, name, price, shortDescription } = props.product;
 
   return (
-    <div className="card my-4">
-      <div className="row align-items-center">
-        <div className="col-sm-6 col-md-5">
-          <img src={props.product.image} className="card-img-top p-4" alt={props.product.name}
-            style={{ width: '100%', height: '300px', objectFit: 'contain' }} />
+    <div className='card my-1 my-sm-2'>
+      <div className='row align-items-center m-0'>
+        <div className='col-3'>
+          <img src={image} className='card-img-top p-sm-3' alt={name} style={{ height: '7rem', objectFit: 'contain' }} />
         </div>
-        <div className="col-sm-6 col-md-7 px-4">
-          <h5 className="card-title mb-3"><b>{props.product.name}</b></h5>
-          <p className="card-text text-muted mb-3">{price}</p>
-          <p className="card-text">{props.product.shortDescription}</p>
+        <div className='col-9'>
+          <h6 className='card-title mb-0 mb-sm-2'>{name}</h6>
+          <p className='card-text text-muted mb-0 mb-sm-2'>${price}</p>
+          <p className='card-text text-truncate' style={{ height: '1.5rem' }}>
+            {shortDescription}
+          </p>
         </div>
       </div>
     </div>
