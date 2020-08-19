@@ -17,30 +17,40 @@ export default class ProductListItem extends React.Component {
   }
 
   render() {
+    const { image, name, productId, price, shortDescription } = this.props.item;
+    const newShortDescription = shortDescription.split(/\r?\n/).map((sentence, index) => {
+      return (
+        <span key={index}>
+          {`${sentence}`}
+          <br />
+        </span>
+      );
+    });
+
     return (
       <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow hvr-underline-from-center' style={{ cursor: 'pointer' }}>
         <img
-          src={this.props.item.image}
+          src={image}
           className='card-img-top'
-          alt={this.props.item.name}
+          alt={name}
           style={{ height: '250px', objectFit: 'contain' }}
-          id={this.props.item.productId}
+          id={productId}
           onClick={this.handleClick}
         />
-        <div className='card-body pb-0 px-3' id={this.props.item.productId} onClick={this.handleClick}>
-          <h6 className='card-title m-0 text-truncate text-wrap' style={{ minHeight: '40px' }}>
-            <b>{this.props.item.name}</b>
+        <div className='card-body pb-0 px-3 text-center' id={productId} onClick={this.handleClick}>
+          <h6 className='card-title m-0 text-truncate text-wrap text-capitalize' style={{ minHeight: '40px' }}>
+            <b>{name}</b>
           </h6>
-          <p className='card-text text-muted mb-1'>${this.props.item.price}</p>
-          <p className='card-text text-truncate text-wrap' style={{ height: '3rem' }}>
-            {this.props.item.shortDescription}
+          <p className='card-text text-muted text-truncate text-wrap mb-1' style={{ height: '3rem' }}>
+            {newShortDescription}
           </p>
+          <p className='card-text mb-1 text-center font-italic'>${price}</p>
         </div>
-        <div className='card-footer d-flex justify-content-around bg-transparent border-0 pb-3' id={this.props.item.productId}>
-          <button type='button' className='btn btn-sm btn-outline-info card-btn' onClick={this.handleClickOrder}>
+        <div className='card-footer d-flex justify-content-around bg-transparent border-0 pb-3' id={productId}>
+          <button type='button' className='btn btn-sm btn-outline-info card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickOrder}>
             Buy Now
           </button>
-          <button type='button' className='btn btn-sm btn-outline-primary card-btn' onClick={this.handleClickCart}>
+          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickCart}>
             Add to Cart
           </button>
         </div>

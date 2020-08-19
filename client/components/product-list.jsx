@@ -24,9 +24,9 @@ export default class ProductList extends React.Component {
     ));
 
     return (
-      <div className='container product-list-container mt-3'>
+      <div className='container product-list-container my-1 my-sm-3'>
         <div className='row'>
-          <h4 className='pt-1'>New Arrival Items</h4>
+          <h4 className='px-3 px-sm-0 mb-sm-3'>New Arrival Items</h4>
         </div>
         <div className='row d-flex justify-content-center align-items-center border rounded p-3'>{productList}</div>
       </div>
