@@ -46,7 +46,7 @@ export default class CartSummary extends React.Component {
       this.props.cart.length === 0
         ? <h3 className="pb-2">Shopping cart is empty.</h3>
         : this.props.cart.map((item, index) => (
-          <CartSummaryItem product={item} key={index}/>
+          <CartSummaryItem product={item} key={index} type="cart"/>
         ))
     );
 
