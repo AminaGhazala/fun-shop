@@ -17,7 +17,8 @@ export default class ProductListItem extends React.Component {
   }
 
   render() {
-    const { image, name, productId, price, shortDescription } = this.props.item;
+    const { name, productId, price, shortDescription } = this.props.item;
+    const image = this.props.item.image.split(',');
     const newShortDescription = shortDescription.split(/\r?\n/).map((sentence, index) => {
       return (
         <span key={index}>
@@ -30,7 +31,7 @@ export default class ProductListItem extends React.Component {
     return (
       <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow hvr-underline-from-center' style={{ cursor: 'pointer' }}>
         <img
-          src={image}
+          src={image[0]}
           className='card-img-top'
           alt={name}
           style={{ height: '250px', objectFit: 'contain' }}
