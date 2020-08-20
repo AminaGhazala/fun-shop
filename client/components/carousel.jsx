@@ -1,6 +1,14 @@
 import React from 'react';
 
 export default function Carousel(props) {
+  const indicator = (
+    <ol className='carousel-indicators'>
+      {props.images.map((image, index) => {
+        return <li data-target='#carouselProductImages' data-slide-to={index} key={index} className={index === 0 ? 'active' : ''}></li>;
+      })}
+    </ol>
+  );
+
   const controlBtn = (
     <>
       <a className='carousel-control-prev' href='#carouselProductImages' role='button' data-slide='prev'>
@@ -13,21 +21,16 @@ export default function Carousel(props) {
       </a>
     </>
   );
+
   return (
     <>
-      <div id='carouselProductImages' className='carousel slide' data-ride='carousel'>
-        <ol className='carousel-indicators'>
-          {props.images.map((image, index) => {
-            return (
-              <li data-target='#carouselProductImages' data-slide-to={index.toString()} key={index} className={index === 0 ? 'active' : ''}></li>
-            );
-          })}
-        </ol>
+      <div id='carouselProductImages' className='carousel slide' data-ride='carousel' data-interval='2000'>
+        {props.images.length > 1 ? indicator : <></>}
         <div className='carousel-inner'>
           {props.images.map((image, index) => {
             return (
               <div className={index === 0 ? 'carousel-item active' : 'carousel-item'} key={index}>
-                <img className='d-block w-100' src={image} alt={`${index + 1} slide`} />
+                <img className='d-block w-100' src={image} alt={`${index} slide`} />
               </div>
             );
           })}
