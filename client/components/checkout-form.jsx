@@ -64,7 +64,7 @@ export default class CheckoutForm extends React.Component {
     );
 
     const checkoutForm = (
-      <form onSubmit={this.handleClickOrder}>
+      <form className='checkout-form-container' onSubmit={this.handleClickOrder}>
         <div className='alert alert-warning text-center' role='alert'>
           <strong>DO NOT USE</strong> your real payment information. This website is for <strong>demonstration purposes only</strong>.
         </div>
@@ -96,7 +96,16 @@ export default class CheckoutForm extends React.Component {
         </div>
         <div className='form-row'>
           <div className='col-4 mb-2'>
-            <input type='text' className='form-control' id='zipcode' placeholder='ZIP code' maxLength='6' required onChange={this.handleChange} />
+            <input
+              type='text'
+              className='form-control'
+              id='zipcode'
+              placeholder='ZIP code'
+              pattern='[0-9]{5,6}'
+              title='ZIP code is at least 5 digits.'
+              required
+              onChange={this.handleChange}
+            />
           </div>
           <div className='col-4 mb-2'>
             <input type='text' className='form-control' id='city' placeholder='City' required onChange={this.handleChange} />
@@ -136,13 +145,23 @@ export default class CheckoutForm extends React.Component {
               className='form-control'
               id='cardNumber'
               placeholder='Card number'
-              maxLength='19'
+              pattern='[0-9]{15,19}'
+              title='Card number is at least 15 digits.'
               required
               onChange={this.handleChange}
             />
           </div>
           <div className='col-6 mb-2'>
-            <input type='password' className='form-control' id='cardSecurityCode' placeholder='Security code' required onChange={this.handleChange} />
+            <input
+              type='password'
+              className='form-control'
+              id='cardSecurityCode'
+              placeholder='Security code'
+              pattern='[0-9]{3,4}'
+              title='Security code is 3 or 4 digits.'
+              required
+              onChange={this.handleChange}
+            />
           </div>
         </div>
         <div className='form-row'>

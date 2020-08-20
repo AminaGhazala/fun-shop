@@ -9,8 +9,12 @@ body {
   color: rgb(20, 20, 20);
 }
 
-.header-font {
+.header-container .header-font {
   font-family: 'Fontdiner Swanky', cursive;
+}
+
+.checkout-form-container input:invalid {
+    border-color: darkslategrey;
 }
 
 .hvr-grow {
