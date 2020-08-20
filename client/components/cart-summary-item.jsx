@@ -3,7 +3,7 @@ import React from 'react';
 export default function CartSummaryItem(props) {
   const { image, name, price, shortDescription } = props.product;
 
-  return (
+  const typeCart = (
     <div className='card my-1 my-sm-2'>
       <div className='row align-items-center m-0'>
         <div className='col-3'>
@@ -19,4 +19,25 @@ export default function CartSummaryItem(props) {
       </div>
     </div>
   );
+
+  const typeCheckout = (
+    <div className='card checkout-card-container my-1 my-sm-2 border-0'>
+      <div className='row align-items-center m-0'>
+        <div className='col-2 pl-0 pr-2 cart-item'>
+          <span className="quantity-badge">1</span>
+          <img src={image} className='card-img-top' alt={name} style={{ maxWidth: '2.5rem', maxHeight: '2.5rem', objectFit: 'contain', border: '1px solid gray' }} />
+        </div>
+        <div className='col-8 col-sm-7 p-0'>
+          <p className='card-title m-0' style={{ lineHeight: '90%' }}>
+            <small>{name}</small>
+          </p>
+        </div>
+        <div className='col-2 col-sm-3 px-0'>
+          <p className='card-text text-muted text-right text-nowrap'>${price}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return props.type === 'cart' ? typeCart : typeCheckout;
 }

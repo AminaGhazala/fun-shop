@@ -17,6 +17,24 @@ body {
     border-color: darkslategrey;
 }
 
+.checkout-card-container .cart-item {
+    position: relative;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.checkout-card-container .quantity-badge {
+    position: absolute;
+    left: -10px;
+    top: 0px;
+    background: coral;
+    text-align: center;
+    border-radius: 30px 30px 30px 30px;
+    color:white;
+    padding: 1px 7px;
+    font-size: 0.8rem;
+}
+
 .hvr-grow {
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
