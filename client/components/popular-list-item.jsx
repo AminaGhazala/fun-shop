@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class ProductListItem extends React.Component {
+export default class PopularListItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickCart = this.handleClickCart.bind(this);

@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
-import ProductList from './product-list';
+import NewProductList from './new-product-list';
+import PopularList from './popular-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
@@ -66,7 +67,12 @@ export default class App extends React.Component {
 
   getMainView(viewName) {
     if (viewName === 'catalog') {
-      return <ProductList selectedView={this.setView} addToCart={this.addToCart} />;
+      return (
+        <>
+          <NewProductList selectedView={this.setView} addToCart={this.addToCart} />
+          <PopularList selectedView={this.setView} addToCart={this.addToCart} />
+        </>
+      );
     } else if (viewName === 'details') {
       return <ProductDetails selectedView={this.setView} viewParam={this.state.view.params} addToCart={this.addToCart} />;
     } else if (viewName === 'cart') {
