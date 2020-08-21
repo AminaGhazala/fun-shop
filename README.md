@@ -28,6 +28,7 @@ https://funshop.jsonkim.com/
   - AWS EC2
 
 ## Preview
+<img src="server/public/images/funshop-screenshot.gif">
 
 ## Getting Started
 1. Run `npm install` to download and install all dependencies
