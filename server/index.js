@@ -108,7 +108,7 @@ app.post('/api/cart', (req, res, next) => {
   db.query(sql, paramDb)
     .then(result => {
       if (result.rows[0] === undefined) {
-        throw (new ClientError('Requested productId may not exist in the database. Check your data agin.', 400));
+        throw new ClientError('Requested productId may not exist in the database. Check your data agin.', 400);
       } else {
         const price = result.rows[0].price;
 
@@ -118,11 +118,10 @@ app.post('/api/cart', (req, res, next) => {
                  values (default, default)
               returning "cartId"
           `;
-          return db.query(sql)
-            .then(result2 => {
-              const cartId = result2.rows[0].cartId;
-              return { cartId, price };
-            });
+          return db.query(sql).then(result2 => {
+            const cartId = result2.rows[0].cartId;
+            return { cartId, price };
+          });
         } else {
           const cartId = req.session.cartId;
           return { cartId, price };
@@ -172,7 +171,20 @@ app.post('/api/orders', (req, res, next) => {
     return res.status(400).json({ error: 'Sorry, your order information is incomplete.' });
   }
 
-  const paramDb = [req.session.cartId, firstName, lastName, address, address2, zipcode, city, state, phone, cardSecurityCode, cardExpMonth, cardExpYear];
+  const paramDb = [
+    req.session.cartId,
+    firstName,
+    lastName,
+    address,
+    address2,
+    zipcode,
+    city,
+    state,
+    phone,
+    cardSecurityCode,
+    cardExpMonth,
+    cardExpYear
+  ];
   const sql = `
         insert into "orders" ("cartId", "firstName", "lastName", "address", "address2", "zipcode", "city", "state", "phone", "cardSecurityCode", "cardExpMonth", "cardExpYear")
              values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
