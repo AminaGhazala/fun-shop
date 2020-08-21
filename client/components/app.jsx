@@ -43,7 +43,8 @@ export default class App extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ productId: `${id}` })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => this.getCartItems())
       .catch(err => this.setState({ message: err.message }));
   }
@@ -123,7 +124,6 @@ export default class App extends React.Component {
     } else {
       return null;
     }
-
   }
 
   render() {

@@ -59,6 +59,19 @@ export default class NewProductList extends React.Component {
   }
 
   render() {
+    const controlBtn = (
+      <>
+        <a className='carousel-control-prev w-auto ml-2 ml-md-4' href='#newProductCarousel' role='button' data-slide='prev'>
+          <span className='carousel-control-prev-icon bg-dark border border-dark rounded-circle' aria-hidden='true'></span>
+          <span className='sr-only'>Previous</span>
+        </a>
+        <a className='carousel-control-next w-auto mr-2 mr-md-4' href='#newProductCarousel' role='button' data-slide='next'>
+          <span className='carousel-control-next-icon bg-dark border border-dark rounded-circle' aria-hidden='true'></span>
+          <span className='sr-only'>Next</span>
+        </a>
+      </>
+    );
+
     return (
       <div className='container mt-1 mb-2 my-sm-3 mb-md-4'>
         <div className='row'>
@@ -101,14 +114,7 @@ export default class NewProductList extends React.Component {
                 );
               })}
             </div>
-            <a className='carousel-control-prev w-auto ml-2 ml-md-4' href='#newProductCarousel' role='button' data-slide='prev'>
-              <span className='carousel-control-prev-icon bg-dark border border-dark rounded-circle' aria-hidden='true'></span>
-              <span className='sr-only'>Previous</span>
-            </a>
-            <a className='carousel-control-next w-auto mr-2 mr-md-4' href='#newProductCarousel' role='button' data-slide='next'>
-              <span className='carousel-control-next-icon bg-dark border border-dark rounded-circle' aria-hidden='true'></span>
-              <span className='sr-only'>Next</span>
-            </a>
+            {this.state.products.length > 1 ? controlBtn : <></>}
           </div>
         </div>
       </div>

@@ -37,7 +37,21 @@ export default class CheckoutForm extends React.Component {
   }
 
   handleBack() {
-    this.setState({ firstName: '', lastName: '', address: '', address2: '', zipcode: '', city: '', state: '', phone: '', cardNumber: '', cardSecurityCode: '', cardExpMonth: '', cardExpYear: '', tnc: false });
+    this.setState({
+      firstName: '',
+      lastName: '',
+      address: '',
+      address2: '',
+      zipcode: '',
+      city: '',
+      state: '',
+      phone: '',
+      cardNumber: '',
+      cardSecurityCode: '',
+      cardExpMonth: '',
+      cardExpYear: '',
+      tnc: false
+    });
     this.props.selectedView('catalog', {});
   }
 
@@ -219,11 +233,7 @@ export default class CheckoutForm extends React.Component {
       </div>
     );
 
-    const checkoutContents = (
-      this.props.cart.map((item, index) => (
-        <CartSummaryItem product={item} key={index} type='checkout' />
-      ))
-    );
+    const checkoutContents = this.props.cart.map((item, index) => <CartSummaryItem product={item} key={index} type='checkout' />);
 
     const checkoutTotal = (
       <div className='row d-flex m-0'>
@@ -238,9 +248,7 @@ export default class CheckoutForm extends React.Component {
         {checkoutMenu}
         {checkoutNotice}
         <div className='row d-flex m-0'>
-          <div className='col-12 col-md-6 col-lg-7 order-2 order-md-1'>
-            {checkoutForm}
-          </div>
+          <div className='col-12 col-md-6 col-lg-7 order-2 order-md-1'>{checkoutForm}</div>
           <div className='col-12 col-md-6 col-lg-5 order-1 order-md-2'>
             {checkoutTitle}
             <hr className='mb-2 mt-0 mb-md-3' />
