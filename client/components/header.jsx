@@ -7,6 +7,14 @@ export default class Header extends React.Component {
     this.handleClickCart = this.handleClickCart.bind(this);
   }
 
+  getCartItemCount() {
+    let totalItems = 0;
+    this.props.cart.map(product => {
+      totalItems += parseInt(product.itemCount);
+    });
+    return totalItems;
+  }
+
   handleClickBack(event) {
     this.props.selectedView('catalog', {});
   }
@@ -16,7 +24,8 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const cartItemTitle = this.props.cartItem === 1 ? '1 Item' : `${this.props.cartItem} Items`;
+    const cartItems = this.getCartItemCount();
+    const cartItemTitle = cartItems === 1 ? '1 Item' : `${cartItems} Items`;
     return (
       <header className='shadow bg-info text-white sticky-top'>
         <div className='container header-container d-flex justify-content-between align-items-center px-3 px-sm-0'>

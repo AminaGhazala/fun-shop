@@ -35,6 +35,24 @@ body {
     font-size: 0.8rem;
 }
 
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  height: 40px;
+  width: 40px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  transition: all .5s;
+  background-size: 60%, 60%;
+}
+
+.carousel-indicators li {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid #fff;
+  opacity: 0.5;
+  transition: all .5s;
+}
+
 .hvr-grow {
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);

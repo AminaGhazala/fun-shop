@@ -1,10 +1,11 @@
 import React from 'react';
 import Loading from './loading';
+import Carousel from './carousel';
 
 export default class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { product: null };
+    this.state = { product: null, images: [] };
     this.handleBack = this.handleBack.bind(this);
     this.handleClickCart = this.handleClickCart.bind(this);
   }
@@ -20,7 +21,7 @@ export default class ProductDetails extends React.Component {
 
     fetch(`/api/products/${productId}`)
       .then(res => res.json())
-      .then(data => this.setState({ product: data }))
+      .then(data => this.setState({ product: data, images: data.image.split(',') }))
       .catch(() => console.error('server response error'));
   }
 
@@ -36,7 +37,7 @@ export default class ProductDetails extends React.Component {
     if (!this.state.product) {
       return <Loading />;
     } else {
-      const { image, name, price, shortDescription, longDescription } = this.state.product;
+      const { name, price, shortDescription, longDescription } = this.state.product;
       const newLongDescription = longDescription.split(/\r?\n/).map((sentence, index) => {
         return (
           <span key={index}>
@@ -57,13 +58,13 @@ export default class ProductDetails extends React.Component {
       const productDetailBody = (
         <div className='row align-items-center m-0'>
           <div className='col-sm-12 col-md-5 pt-3'>
-            <img src={image} className='card-img-top' alt={name} style={{ height: '300px', objectFit: 'contain' }} />
+            <Carousel images={this.state.images} />
           </div>
           <div className='col-sm-12 col-md-7 p-4 p-sm-4 p-md-4'>
             <h5 className='card-title mb-3'>
               <b>{name}</b>
             </h5>
-            <p className='card-text text-muted mb-3'>${price}</p>
+            <p className='card-text text-success mb-3'>Retail Price: ${price}</p>
             <p className='card-text'>{shortDescription}</p>
             <button type='button' className='btn btn-outline-primary' onClick={this.handleClickCart}>
               Add to Cart

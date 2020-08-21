@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class ProductListItem extends React.Component {
+export default class PopularListItem extends React.Component {
   constructor(props) {
     super(props);
     this.handleClickCart = this.handleClickCart.bind(this);
@@ -17,7 +17,8 @@ export default class ProductListItem extends React.Component {
   }
 
   render() {
-    const { image, name, productId, price, shortDescription } = this.props.item;
+    const { name, productId, price, shortDescription } = this.props.item;
+    const image = this.props.item.image.split(',');
     const newShortDescription = shortDescription.split(/\r?\n/).map((sentence, index) => {
       return (
         <span key={index}>
@@ -28,9 +29,9 @@ export default class ProductListItem extends React.Component {
     });
 
     return (
-      <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow hvr-underline-from-center' style={{ cursor: 'pointer' }}>
+      <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow' style={{ cursor: 'pointer' }}>
         <img
-          src={image}
+          src={image[0]}
           className='card-img-top'
           alt={name}
           style={{ height: '250px', objectFit: 'contain' }}
@@ -47,10 +48,7 @@ export default class ProductListItem extends React.Component {
           <p className='card-text mb-1 text-center font-italic'>${price}</p>
         </div>
         <div className='card-footer d-flex justify-content-around bg-transparent border-0 pb-3' id={productId}>
-          <button type='button' className='btn btn-sm btn-outline-info card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickOrder}>
-            Buy Now
-          </button>
-          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickCart}>
+          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '8rem' }} onClick={this.handleClickCart}>
             Add to Cart
           </button>
         </div>

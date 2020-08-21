@@ -28,7 +28,7 @@ export default class CheckoutForm extends React.Component {
   }
 
   getTotalPrice() {
-    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.price), 0);
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.subTotal), 0);
     if (totalPrice === 0) {
       return 'Total: 0';
     } else {
@@ -116,7 +116,8 @@ export default class CheckoutForm extends React.Component {
             <input type='text' className='form-control' id='city' placeholder='City' required onChange={this.handleChange} />
           </div>
           <div className='col-4 mb-2'>
-            <select className='custom-select' name='state' id='state' defaultValue='California' required onChange={this.handleChange}>
+            <select className='custom-select' name='state' id='state' required onChange={this.handleChange}>
+              <option value=''> State </option>
               {this.states.map((state, index) => {
                 return (
                   <option key={index} value={state}>
@@ -206,7 +207,7 @@ export default class CheckoutForm extends React.Component {
         </div>
         <div className='d-flex justify-content-center'>
           <button type='submit' className='btn btn-outline-info' style={{ width: '12rem' }}>
-              Place Order
+            Place Order
           </button>
         </div>
       </form>

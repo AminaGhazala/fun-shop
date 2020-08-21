@@ -16,9 +16,18 @@ export default class CartSummary extends React.Component {
     this.props.selectedView('checkout', {});
   }
 
+  getCartItemCount() {
+    let totalItems = 0;
+    this.props.cart.map(product => {
+      totalItems += parseInt(product.itemCount);
+    });
+    return totalItems;
+  }
+
   getTotalPrice() {
-    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.price), 0);
-    const cartItemTitle = this.props.cart.length === 1 ? '1 Item' : `${this.props.cart.length} Items`;
+    const cartItems = this.getCartItemCount();
+    const totalPrice = this.props.cart.reduce((acc, cur) => parseFloat(acc) + parseFloat(cur.subTotal), 0);
+    const cartItemTitle = cartItems === 1 ? '1 Item' : `${cartItems} Items`;
 
     if (totalPrice === 0) {
       return 'Item Total: 0';
@@ -42,13 +51,14 @@ export default class CartSummary extends React.Component {
       </div>
     );
 
-    const cartSummaryItem = (
-      this.props.cart.length === 0
-        ? <h3 className="pb-2">Shopping cart is empty.</h3>
-        : this.props.cart.map((item, index) => (
-          <CartSummaryItem product={item} key={index} type="cart"/>
-        ))
-    );
+    const cartSummaryItem =
+      this.props.cart.length === 0 ? (
+        <div className='d-flex justify-content-center my-5'>
+          <img src='/images/empty-cart.png' className='mx-auto' alt='empty cart' style={{ maxHeight: '20rem', objectFit: 'contain' }} />
+        </div>
+      ) : (
+        this.props.cart.map((item, index) => <CartSummaryItem product={item} key={index} type='cart' />)
+      );
 
     const cartSummaryFooter =
       this.props.cart.length === 0 ? null : (
