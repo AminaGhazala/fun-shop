@@ -29,7 +29,7 @@ export default class PopularListItem extends React.Component {
     });
 
     return (
-      <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow hvr-underline-from-center' style={{ cursor: 'pointer' }}>
+      <div className='product-list-item card col-lg-4 col-sm-6 mb-4 border-0 hvr-grow' style={{ cursor: 'pointer' }}>
         <img
           src={image[0]}
           className='card-img-top'
@@ -48,10 +48,7 @@ export default class PopularListItem extends React.Component {
           <p className='card-text mb-1 text-center font-italic'>${price}</p>
         </div>
         <div className='card-footer d-flex justify-content-around bg-transparent border-0 pb-3' id={productId}>
-          <button type='button' className='btn btn-sm btn-outline-info card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickOrder}>
-            Buy Now
-          </button>
-          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '5.5rem' }} onClick={this.handleClickCart}>
+          <button type='button' className='btn btn-sm btn-outline-primary card-btn px-0' style={{ width: '8rem' }} onClick={this.handleClickCart}>
             Add to Cart
           </button>
         </div>

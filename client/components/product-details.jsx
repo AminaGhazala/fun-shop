@@ -64,7 +64,7 @@ export default class ProductDetails extends React.Component {
             <h5 className='card-title mb-3'>
               <b>{name}</b>
             </h5>
-            <p className='card-text text-muted mb-3'>${price}</p>
+            <p className='card-text text-success mb-3'>Retail Price: ${price}</p>
             <p className='card-text'>{shortDescription}</p>
             <button type='button' className='btn btn-outline-primary' onClick={this.handleClickCart}>
               Add to Cart

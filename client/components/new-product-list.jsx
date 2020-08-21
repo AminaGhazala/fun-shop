@@ -78,7 +78,7 @@ export default class NewProductList extends React.Component {
                     {itemChunk.map(item => {
                       return (
                         <div
-                          className='card col-12 col-sm-6 col-md-4 float-left border-0'
+                          className='card col-12 col-sm-6 col-md-4 float-left border-0 hvr-underline-from-center'
                           key={item.productId}
                           id={item.productId}
                           onClick={this.handleClick}>

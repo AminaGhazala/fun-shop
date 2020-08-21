@@ -135,9 +135,17 @@ ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
 CREATE TABLE public.orders (
     "orderId" integer NOT NULL,
     "cartId" integer NOT NULL,
-    name text NOT NULL,
-    "creditCard" text NOT NULL,
-    "shippingAddress" text NOT NULL,
+    "firstName" text NOT NULL,
+    "lastName" text NOT NULL,
+    "address" text NOT NULL,
+    "address2" text,
+    "zipcode" text NOT NULL,
+    "city" text NOT NULL,
+    "state" text NOT NULL,
+    "phone" text,
+    "cardSecurityCode" text NOT NULL,
+    "cardExpMonth" text NOT NULL,
+    "cardExpYear" text NOT NULL,
     "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
 );
 
