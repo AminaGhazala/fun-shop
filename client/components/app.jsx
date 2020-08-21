@@ -5,6 +5,7 @@ import PopularList from './popular-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import CheckoutForm from './checkout-form';
+import Welcome from './welcome';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -13,11 +14,14 @@ export default class App extends React.Component {
       message: null,
       isLoading: true,
       view: { name: 'catalog', params: {} },
-      cart: []
+      cart: [],
+      welcomeVisible: 'modal-show',
+      welcomeModalAnim: 'fade-in'
     };
     this.setView = this.setView.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.hideModal = this.hideModal.bind(this);
   }
 
   getCartItems() {
@@ -91,6 +95,13 @@ export default class App extends React.Component {
     this.setState({ view: newView });
   }
 
+  hideModal() {
+    this.setState({ welcomeModalAnim: 'fade-out' });
+    setTimeout(() => {
+      this.setState({ welcomeVisible: 'modal-none' });
+    }, 1000);
+  }
+
   componentDidMount() {
     this.getCartItems();
   }
@@ -112,13 +123,15 @@ export default class App extends React.Component {
     } else {
       return null;
     }
+
   }
 
   render() {
     return (
       <div>
-        <Header title={'Fun Shop'} cart={this.state.cart} selectedView={this.setView}/>
+        <Header title={'Fun Shop'} cart={this.state.cart} selectedView={this.setView} />
         {this.getMainView(this.state.view.name)}
+        <Welcome accept={this.hideModal} show={this.state.welcomeVisible} anim={this.state.welcomeModalAnim} />;
       </div>
     );
   }
