@@ -53,42 +53,6 @@ body {
   transition: all .5s;
 }
 
-@media (max-width: 768px) {
-    #newProductCarousel .carousel-item > div {
-        display: none;
-    }
-    #newProductCarousel .carousel-item > div:first-child {
-        display: block;
-    }
-}
-
-#newProductCarousel .carousel-item.active,
-#newProductCarousel .carousel-item-next,
-#newProductCarousel .carousel-item-prev {
-    display: flex;
-}
-
-/* display 3 */
-@media (min-width: 768px) {
-
-    #newProductCarousel .carousel-item-right.active,
-    #newProductCarousel .carousel-item-next {
-      transform: translateX(33.333%);
-    }
-
-    #newProductCarousel .carousel-item-left.active,
-    #newProductCarousel .carousel-item-prev {
-      transform: translateX(-33.333%);
-    }
-}
-
-#newProductCarousel .carousel-item-right,
-#newProductCarousel .carousel-item-left{
-  transform: translateX(0);
-}
-
-
-
 .hvr-grow {
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);

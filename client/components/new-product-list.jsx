@@ -1,11 +1,11 @@
 import React from 'react';
-import $ from 'jquery';
 
 export default class NewProductList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [] };
+    this.state = { products: [], windowWidth: window.innerWidth };
     this.handleClick = this.handleClick.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   handleClick(event) {
@@ -13,8 +13,17 @@ export default class NewProductList extends React.Component {
     this.props.selectedView('details', param);
   }
 
+  handleResize() {
+    this.setState({ windowWidth: window.innerWidth });
+  }
+
   componentDidMount() {
     this.getProducts();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnMount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   getProducts() {
@@ -24,29 +33,34 @@ export default class NewProductList extends React.Component {
       .catch(() => console.error('server response error'));
   }
 
-  showItems(number) {
-    $('#newProductCarousel .carousel-item').each(function () {
-      const minPerSlide = number;
-      let next = $(this).next();
-      if (!next.length) {
-        next = $(this).siblings(':first');
-      }
-      next.children(':first-child').clone().appendTo($(this));
+  getArrayChunk(array, chunkSize) {
+    var result = array.reduce((resultArray, item, index) => {
+      const chunkIndex = Math.floor(index / chunkSize);
 
-      for (let i = 0; i < minPerSlide; i++) {
-        next = next.next();
-        if (!next.length) {
-          next = $(this).siblings(':first');
-        }
-        next.children(':first-child').clone().appendTo($(this));
+      if (!resultArray[chunkIndex]) {
+        resultArray[chunkIndex] = [];
       }
-    });
+
+      resultArray[chunkIndex].push(item);
+      return resultArray;
+    }, []);
+
+    return result;
+  }
+
+  getItemCount(size) {
+    if (this.state.windowWidth < 576) {
+      return 1;
+    } else if (this.state.windowWidth < 768) {
+      return 2;
+    } else {
+      return 3;
+    }
   }
 
   render() {
-    this.showItems(1);
     return (
-      <div className='container my-1 my-sm-3 mb-md-4'>
+      <div className='container mt-1 mb-2 my-sm-3 mb-md-4'>
         <div className='row'>
           <h4 className='px-3 px-sm-0 mb-sm-3'>New Arrival Items</h4>
         </div>
@@ -58,27 +72,34 @@ export default class NewProductList extends React.Component {
             data-interval='3000'
             style={{ cursor: 'pointer' }}>
             <div className='carousel-inner w-100 px-5' role='listbox'>
-              {this.state.products.map((product, index) => {
+              {this.getArrayChunk(this.state.products, this.getItemCount()).map((itemChunk, index) => {
                 return (
-                  <div className={index === 0 ? 'carousel-item active' : 'carousel-item'} key={index}>
-                    <div className='card col-12 col-sm-6 col-md-4 border-0' id={product.productId} onClick={this.handleClick}>
-                      <img
-                        src={product.image.split(',')[0]}
-                        className='card-img-top mt-3'
-                        alt={product.name}
-                        style={{ height: '200px', objectFit: 'contain' }}
-                      />
-                      <div className='card-body pb-0 px-3 text-center'>
-                        <p className='card-text mb-1 text-center font-italic'>${product.price}</p>
-                        <h6 className='card-title m-0 mb-2 text-truncate text-wrap text-capitalize' style={{ minHeight: '40px' }}>
-                          {product.name}
-                        </h6>
-                      </div>
-                    </div>
+                  <div className={index === 0 ? 'carousel-item row no-gutters active' : 'carousel-item row no-gutters'} key={index}>
+                    {itemChunk.map(item => {
+                      return (
+                        <div
+                          className='card col-12 col-sm-6 col-md-4 float-left border-0'
+                          key={item.productId}
+                          id={item.productId}
+                          onClick={this.handleClick}>
+                          <img
+                            src={item.image.split(',')[0]}
+                            className='card-img-top mt-3'
+                            alt={item.name}
+                            style={{ height: '200px', objectFit: 'contain' }}
+                          />
+                          <div className='card-body pb-0 px-3 text-center'>
+                            <p className='card-text mb-1 text-center font-italic'>${item.price}</p>
+                            <h6 className='card-title m-0 mb-2 text-truncate text-wrap text-capitalize' style={{ minHeight: '40px' }}>
+                              {item.name}
+                            </h6>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 );
-              })
-              }
+              })}
             </div>
             <a className='carousel-control-prev w-auto ml-2 ml-md-4' href='#newProductCarousel' role='button' data-slide='prev'>
               <span className='carousel-control-prev-icon bg-dark border border-dark rounded-circle' aria-hidden='true'></span>
