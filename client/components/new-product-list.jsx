@@ -48,7 +48,7 @@ export default class NewProductList extends React.Component {
     return result;
   }
 
-  getItemCount(size) {
+  getItemCount() {
     if (this.state.windowWidth < 576) {
       return 1;
     } else if (this.state.windowWidth < 768) {
