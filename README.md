@@ -27,11 +27,18 @@ https://funshop.jsonkim.com/
   - Bootstrap 4
   - AWS EC2
 
-## Preview
-<img src="server/public/images/funshop-screenshot.gif">
-
 ## Getting Started
 1. Run `npm install` to download and install all dependencies
 2. Run `npm run db:import` to import existing database.
 3. Run `npm run start` script before viewing on `localhost:3001`
 4. Access application by entering [http://localhost:3001](http://localhost:3001) in the browser.
+
+## Preview
+  - Device: Desktop / Browser: Chrome 
+  
+<img src="server/public/images/funshop-screenshot.gif">
+
+
+  - Device: Mobile / Mode: Portrait / Browser: Chrome 
+
+<img src="server/public/images/funshop-screenshot-mobile-portrait.gif">
