@@ -131,7 +131,7 @@ export default class App extends React.Component {
       <div>
         <Header title={'Fun Shop'} cart={this.state.cart} selectedView={this.setView} />
         {this.getMainView(this.state.view.name)}
-        <Welcome accept={this.hideModal} show={this.state.welcomeVisible} anim={this.state.welcomeModalAnim} />;
+        <Welcome accept={this.hideModal} show={this.state.welcomeVisible} anim={this.state.welcomeModalAnim} />
       </div>
     );
   }
