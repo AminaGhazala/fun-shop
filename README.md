@@ -30,8 +30,9 @@ https://funshop.jsonkim.com/
 ## Getting Started
 1. Run `npm install` to download and install all dependencies
 2. Run `npm run db:import` to import existing database.
-3. Run `npm run start` script before viewing on `localhost:3001`
-4. Access application by entering [http://localhost:3001](http://localhost:3001) in the browser.
+3. Run `npm run build` to compile project with a production build  
+4. Run `npm run start` script before viewing on `localhost:3001`
+5. Access application by entering [http://localhost:3001](http://localhost:3001) in the browser.
 
 ## Preview
   - Device: Desktop / Browser: Chrome 
